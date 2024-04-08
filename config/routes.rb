@@ -7,4 +7,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+
+  get "/sign-up" => "users#new", as: :sign_up
+  post "/sign-up" => "users#create"
+
+  delete "/sign-out" => "sessions#destroy", as: :sign_out
+
+  get "/sign-in" => "sessions#new", as: :sign_in
+  post "/sign-in" => "sessions#create"
+
 end

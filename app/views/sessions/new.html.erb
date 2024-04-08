@@ -1,0 +1,25 @@
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100vh; width: 100%;">
+    <div class="d-flex flex-column p-4 m-auto" style="width: 35%; border: 1px solid #000; border-radius: 5px; box-shadow: 1px 1px 5px;">
+        <h2 class="text-center">Sign In</h2>
+
+        <%= form_with url: sign_in_path do |form| %>
+            <div class="form-group mb-3">   
+                <%= form.label :email %>
+                <%= form.text_field :email, class: "form-control", placeholder: "Enter Your Email Address", required: true %>
+            </div>
+
+            <div class="form-group mb-3">
+                <%= form.label :password %>
+                <%= form.password_field :password, class: "form-control", placeholder: "Enter Password", required: true %>
+            </div>
+
+            <div class="mt-4">
+                <%= form.submit "Sign In", class: "btn btn-primary w-100" %>
+            </div>
+        <% end %>
+
+        <div class="mt-4">
+            <span>Don't have an account? <%= link_to "Sign Up", "/sign-up" %></span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100vh; width: 100%;">
+    <div class="d-flex flex-column p-4 m-auto" style="width:35%; border: 1px solid #000; border-radius: 5px; box-shadow: 1px 1px 5px;">
+        <h2 class="text-center">Sign Up</h2>
+
+        <%= form_with model: @user, url: sign_up_path do |form| %>
+            <% fullNameInvalid = @user.errors[:full_name].any? %>
+            <div class="form-group mb-3">
+                
+                <%= form.label :full_name %>
+                <%= form.text_field :full_name, class: "form-control #{'is-invalid' if fullNameInvalid}", placeholder: "Enter Full Name", required: true %>
+
+                <% if fullNameInvalid %>
+                    <div class="invalid-feedback d-block">
+                        <% @user.errors[:full_name].each do |error_message| %>
+                            <%= error_message %>.
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+
+            <% emailInvalid = @user.errors[:email].any? %>
+            <div class="form-group mb-3">   
+                <%= form.label :email %>
+                <%= form.text_field :email, class: "form-control #{'is-invalid' if emailInvalid}", placeholder: "Enter Your Email Address", required: true %>
+                <% if emailInvalid %>
+                    <div class="invalid-feedback d-block">
+                        <% @user.errors[:email].each do |error_message| %>
+                            <%= error_message %>.
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+
+            <% passwordInvalid = @user.errors[:password].any? %>
+            <div class="form-group mb-3">
+                <%= form.label :password %>
+                <%= form.password_field :password, class: "form-control #{'is-invalid' if passwordInvalid}", placeholder: "Enter Password", required: true %>
+                <% if passwordInvalid %>
+                    <div class="invalid-feedback d-block">
+                        <% @user.errors[:password].each do |error_message| %>
+                            <%= error_message %>.
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+
+            <% confirmPasswordInvalid = @user.errors[:password_confirmation].any? %>
+            <div class="form-group mb-3">
+                <%= form.label :password_confirmation %>
+                <%= form.password_field :password_confirmation, class: "form-control #{'is-invalid' if confirmPasswordInvalid}", placeholder: "Re-Enter Your Password", required: true %>
+                <% if confirmPasswordInvalid %>
+                    <div class="invalid-feedback d-block">
+                        <% @user.errors[:password_confirmation].each do |error_message| %>
+                            <%= error_message %>.
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+
+            <div class="mt-4">
+                <%= form.submit "Sign Up", class: "btn btn-primary w-100" %>
+            </div>
+        <% end %>
+
+        <div class="mt-4">
+            Already have an account? <%= link_to "Sign In", "/sign-in" %>
+        </div>
+    </div>
+</div>
