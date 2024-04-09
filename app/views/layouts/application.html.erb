@@ -14,7 +14,8 @@
   </head>
 
   <body>
-    <main class="container" style="min-height: 100vh;">
+    <%= render partial: "shared/nav" %>
+    <main class="container">
       <%= yield %>
       <%= render partial: "shared/flash" %> 
     </main>
