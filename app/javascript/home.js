@@ -1,5 +1,12 @@
 function addQuantity(id) {
   let quantity = document.getElementById(`quantity-${id}`);
+
+  let itemsAvailable = document.getElementById(`items-available-${id}`);
+
+  if (parseInt(quantity.innerHTML) + 1 > parseInt(itemsAvailable.innerHTML)) {
+    return;
+  }
+
   quantity.innerHTML = parseInt(quantity.innerHTML) + 1;
 
   if (quantity.innerHTML > 0) {
