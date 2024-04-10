@@ -10,7 +10,7 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                          <li class="nav-item dropdown">
-                            <button class="btn btn-outline-pirmary">Cart (<%= @cart_items_count %>)</button>
+                            <button class="btn btn-outline-pirmary"type="button" data-bs-toggle="offcanvas" data-bs-target="#cart" aria-controls="cart" >Cart (<%= @cart_items_count %>)</button>
                          </li>
                         <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,5 +27,53 @@
             </div>
         </div>
     </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="cart" aria-labelledby="cartLabel">
+        <% if @cart_items.present? %>
+            <div class="offcanvas-header d-flex justify-content-center">
+                <h5 class="offcanvas-title" id="cartLabel">Items in your Cart</h5>
+            </div>
+            <div class="offcanvas-body">
+                <ul style="padding-left: 0;">
+                    <% @cart_items.each do |item| %>
+                        <li class="d-flex flex-row align-items-center">
+                            <div>
+                                <%= image_tag "sample.png", alt: "sample image", height: 50, width: 50 %>
+                            </div>
+
+                            <div class="d-flex flex-row justify-content-between w-100 px-4">
+                                <span><%= item.product.product_name %> <strong>(x<%= item.product_quantity %>)</strong></span>
+
+                                <span>$ <%= item.total_price %></span>
+                            </div>
+                        </li>
+                    <% end %>
+
+                    <hr />
+
+                    <li class="d-flex flex-row align-items-center">
+                        <div style="height: 50px; width: 50px;">
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-between w-100 px-4">
+                            <span><strong>Total: </strong></span>
+
+                            <span>$ <%= @total_price %></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="d-flex flex-row justify-content-between my-4">
+                    <button class="btn btn-danger">Clear Cart</button>
+
+                    <button class="btn btn-primary">Checkout</button>
+                </div>
+            </div>
+        <% else %>
+            <div class="offcanvas-header d-flex justify-content-center">
+                <h5 class="offcanvas-title" id="cartLabel">Your Cart is Empty</h5>
+            </div>
+        <% end %>
+    </div>
 <% end %>
 
