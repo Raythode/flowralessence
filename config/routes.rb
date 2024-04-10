@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   get "/" => "home#index", as: :root
   post "/add-to-cart" => "home#add_to_cart", as: :add_to_cart
+  delete "/clear-cart" => "home#clear_cart", as: :clear_cart
 
 
   get "/sign-up" => "users#new", as: :sign_up

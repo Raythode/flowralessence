@@ -23,4 +23,20 @@ class HomeController < ApplicationController
       format.html { redirect_to root_path }
     end
   end
+
+  def clear_cart
+    @cart_items = Cart.all.where(customer_id: Current.user.id)
+
+    @cart_items.each do |cart|
+      product = Product.find(cart.product_id)
+      product.quantity += cart.product_quantity
+      product.save
+    end
+
+    Cart.where(customer_id: Current.user.id).destroy_all
+
+    respond_to do |format|
+      format.html { redirect_to root_path }
+    end
+  end
 end
