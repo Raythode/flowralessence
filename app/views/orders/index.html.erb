@@ -1,0 +1,30 @@
+<div class="container-fluid py-4">
+    <div class="d-flex w-100 justify-content-center">
+        <h4>Orders</h4>
+    </div>
+
+    <table class="table table-bordered my-4">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Order Status</th>
+                <th>Order Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @orders.each do |order| %>
+                <tr>
+                    <td><%= order.last.first.order_number %></td>
+                    <td><%= order.last.first.created_at %></td>
+                    <td><%= order.last.first.status.status %></td>
+                    <td>$ <%= number_with_precision order.last.first.order_total, :precision => 2 %></td>
+                    <td style="text-align: center;">
+                        <%= image_tag "details.png", alt: "Details", height: 25, widht: 25, style: "cursor: pointer;" %> 
+                    </td>
+                </tr>
+            <% end %>  
+    </table>
+</div>
+

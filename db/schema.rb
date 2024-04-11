@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_09_051236) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_10_053217) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "carts", force: :cascade do |t|
     t.integer "customer_id"
@@ -22,11 +32,43 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_09_051236) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.integer "customer_id"
+    t.string "order_number"
+    t.integer "product_id"
+    t.float "product_sale_price"
+    t.integer "product_quantity"
+    t.float "order_tax"
+    t.float "order_total"
+    t.integer "address_id"
+    t.integer "payment_info_id"
+    t.integer "status_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.string "name_on_card"
+    t.string "card_number"
+    t.string "expiration_date"
+    t.string "cvv"
+    t.string "zip_code"
+    t.string "billing_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "product_name"
     t.string "product_description"
     t.float "price"
     t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

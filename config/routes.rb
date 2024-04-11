@@ -19,4 +19,8 @@ Rails.application.routes.draw do
   get "/sign-in" => "sessions#new", as: :sign_in
   post "/sign-in" => "sessions#create"
 
+  get "/checkout" => "orders#checkout", as: :checkout
+  post "/checkout" => "orders#create"
+
+  get "/orders" => "orders#index", as: :orders
 end

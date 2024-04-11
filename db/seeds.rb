@@ -23,3 +23,7 @@ end
 ].each do |item|
     Product.create!(product_name: item[:product_name], product_description: item[:product_description], price: item[:price], quantity: item[:quantity])
 end
+
+['Pending', 'Processing', 'Shipped', 'Delivered'].each do |status|
+    Status.find_or_create_by!(status: status)
+end

@@ -12,7 +12,7 @@
                             <h6 class="card-description"><%= item[:product_description] %></h6>
                         </div>
                         <div class="d-flex flex-row justify-content-between">
-                            <p class="card-text">Price: <strong>$ <%= item[:price] %></strong></p>
+                            <p class="card-text">Price: <strong>$ <%= number_with_precision item[:price], :precision => 2 %></strong></p>
                             <p class="card-text">Available: <strong id="items-available-<%= item[:id] %>"><%= item[:quantity] %></strong></p>
                         </div>
 

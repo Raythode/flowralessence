@@ -1,0 +1,190 @@
+<%= javascript_include_tag('orders.js') %>
+
+<%= form_with url: checkout_path, class: "container-fluid py-4 row" do |form| %>
+    <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h4>Shipping Address</h4>
+                </div>
+                <address class="card-body">
+                    <div class="form-group mb-3">   
+                        <%= form.label :address_line_1 %>
+                        <%= form.text_field :address_line_1, class: "form-control", placeholder: "Enter your Address", required: true %>
+                    </div>
+
+                    <div class="form-group mb-3">   
+                        <%= form.label :address_line_2 %>
+                        <%= form.text_field :address_line_2, placeholder: "Apt #", class: "form-control" %>
+                    </div>
+
+                    <div class="form-group mb-3">   
+                        <%= form.label :city %>
+                        <%= form.text_field :city, class: "form-control", required: true %>
+                    </div>
+
+                    <div class="form-group mb-3">   
+                        <%= form.label :state %>
+                        <%= form.text_field :state, class: "form-control", required: true %>
+                    </div>
+
+                    <div class="form-group mb-3">   
+                        <%= form.label :zip_code %>
+                        <%= form.text_field :zip_code, class: "form-control", required: true %>
+                    </div>
+                </address>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4>Payment Information</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group mb-3">   
+                        <%= form.label :name_on_card %>
+                        <%= form.text_field :name_on_card, class: "form-control", placeholder: "Enter Full Name", required: true %>
+                    </div>
+
+                    <div class="form-group mb-3">   
+                        <%= form.label :card_number %>
+                        <%= form.text_field :card_number, class: "form-control" %>
+                    </div>
+
+                    <div class="form-group mb-3">   
+                        <%= form.label :expiration_date %>
+                        <%= form.text_field :expiration_date, class: "form-control", required: true %>
+                    </div>
+
+                    <div class="form-group mb-3">   
+                        <%= form.label :cvv %>
+                        <%= form.text_field :cvv, class: "form-control", required: true %>
+                    </div>
+
+                    <div class="form-group mb-3">   
+                        <%= form.label :zip_code %>
+                        <%= form.text_field :zip_code, class: "form-control", required: true %>
+                    </div>
+
+                    <div class="form-group mb-3">   
+                        <%= form.label :is_billing_address_same_as_shipping_address?, "Is Billing Address Same as Shipping Address" %>
+                        <%= form.check_box :is_billing_address_same_as_shipping_address,{}, "Yes", "No" %>
+                    </div>
+
+                    <address id="billing-address" style="display:block;">
+                        <div class="form-group mb-3">   
+                            <%= form.label :billing_address_line_1, "Address Line 1" %>
+                            <%= form.text_field :billing_address_line_1, class: "form-control", placeholder: "Enter your Address", required: true %>
+                        </div>
+
+                        <div class="form-group mb-3">   
+                            <%= form.label :billing_address_line_2, "Address Line 2" %>
+                            <%= form.text_field :billing_address_line_2, placeholder: "Apt #", class: "form-control" %>
+                        </div>
+
+                        <div class="form-group mb-3">   
+                            <%= form.label :billing_city, "City" %>
+                            <%= form.text_field :billing_city, class: "form-control", required: true %>
+                        </div>
+
+                        <div class="form-group mb-3">   
+                            <%= form.label :billing_state, "State" %>
+                            <%= form.text_field :billing_state, class: "form-control", required: true %>
+                        </div>
+
+                        <div class="form-group mb-3">   
+                            <%= form.label :billing_zip_code, "Zip Code" %>
+                            <%= form.text_field :billing_zip_code, class: "form-control", required: true %>
+                        </div>
+                    </address>
+                </div>
+            </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>Summary</h4>
+            </div>
+            <div class="card-body">
+                <ul style="padding-left: 0;">
+                    <% @cart_items.each do |item| %>
+                        <li class="d-flex flex-row align-items-center mb-4">
+                            <div>
+                                <%= image_tag "sample.png", alt: "sample image", height: 50, width: 50 %>
+                            </div>
+
+                            <div class="d-flex flex-row justify-content-between w-100 px-4">
+                                <span><%= item.product.product_name %> <strong>(x<%= item.product_quantity %>)</strong></span>
+
+                                <span>$ <%= number_with_precision item.total_price, :precision => 2 %></span>
+                            </div>
+                        </li>
+                    <% end %>
+
+                    <hr />
+
+                    <li class="d-flex flex-row align-items-center">
+                        <div style="height: 50px; width: 50px;">
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-between w-100 px-4">
+                            <span><strong>Sub-Total: </strong></span>
+
+                            <span>$ <%= number_with_precision @total_price, :precision => 2 %></span>
+                        </div>
+                    </li>
+
+                    <li class="d-flex flex-row align-items-center">
+                        <div style="height: 50px; width: 50px;">
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-between w-100 px-4">
+                            <span><strong>Tax: </strong></span>
+
+                            <span>$ <%= number_with_precision @tax, :precision => 2 %></span>
+                        </div>
+                    </li>
+
+                    <li class="d-flex flex-row align-items-center">
+                        <div style="height: 50px; width: 50px;">
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-between w-100 px-4">
+                            <span><strong>Total: </strong></span>
+
+                            <span>$ <%= number_with_precision @complete_price, :precision => 2 %></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="d-flex flex-row justify-content-between mt-4">
+                    <%= button_to "Cancel", root_path, method: :get, class: "btn btn-danger" %>
+
+                    <%= form.submit "Place Order", class: "btn btn-primary" %>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    var checkbox = document.getElementById(
+    "is_billing_address_same_as_shipping_address"
+    );
+    var details_div = document.getElementById("billing-address");
+    checkbox.onchange = function () {
+    if (this.checked) {
+        details_div.style["display"] = "none";
+
+        document.getElementById("billing_address_line_1").required = false;
+        document.getElementById("billing_city").required = false;
+        document.getElementById("billing_state").required = false;
+        document.getElementById("billing_zip_code").required = false;
+    } else {
+        details_div.style["display"] = "block";
+
+        document.getElementById("billing_address_line_1").required = true;
+        document.getElementById("billing_city").required = true;
+        document.getElementById("billing_state").required = true;
+        document.getElementById("billing_zip_code").required = true;
+    }
+    };
+</script>
