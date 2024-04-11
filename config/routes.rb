@@ -23,4 +23,5 @@ Rails.application.routes.draw do
   post "/checkout" => "orders#create"
 
   get "/orders" => "orders#index", as: :orders
+  get "/orders/:order_number" => "orders#show", as: :order
 end

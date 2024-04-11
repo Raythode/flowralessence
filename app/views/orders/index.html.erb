@@ -21,7 +21,9 @@
                     <td><%= order.last.first.status.status %></td>
                     <td>$ <%= number_with_precision order.last.first.order_total, :precision => 2 %></td>
                     <td style="text-align: center;">
-                        <%= image_tag "details.png", alt: "Details", height: 25, widht: 25, style: "cursor: pointer;" %> 
+                        <button onclick="location.href = 'orders/<%= order.last.first.order_number %>'">
+                            <%= image_tag "details.png", alt: "Details", height: 25, widht: 25 %> 
+                        </button>  
                     </td>
                 </tr>
             <% end %>  

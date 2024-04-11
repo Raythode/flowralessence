@@ -6,6 +6,14 @@ class OrdersController < ApplicationController
   def checkout
   end
 
+  def show
+    @order = Order.where(customer_id: Current.user.id, order_number: params[:order_number])
+
+    @order_total = @order.first.order_total
+    @order_tax = @order.first.order_tax
+    @order_complete_total = @order_total + @order_tax
+  end
+
   def create
     @cart_items = Cart.all.where(customer_id: Current.user.id)
 
