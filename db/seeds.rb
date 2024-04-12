@@ -8,6 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+User.find_or_create_by!(full_name: "Test User", email: "test@gmail.com", "password_digest": BCrypt::Password.create("test"), role_id: 1)
 
 ['Customer', 'Admin'].each do |role|
     UserRole.find_or_create_by!(role: role)
