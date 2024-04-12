@@ -5,6 +5,10 @@ class CreateProducts < ActiveRecord::Migration[7.1]
       t.string :product_description
       t.float :price
       t.integer :quantity
+      t.integer :product_type_id
+      t.integer :product_size_id
+      t.integer :occassion_id
+      t.integer :color_id
 
       t.timestamps
     end

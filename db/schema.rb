@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_10_053217) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_12_191807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,14 +46,26 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_10_053217) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+  create_table "colors", force: :cascade do |t|
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
-  create_table "payments", force: :cascade do |t|
-    t.string "name_on_card"
-    t.string "card_number"
-    t.string "expiration_date"
-    t.string "cvv"
-    t.string "zip_code"
-    t.string "billing_address"
+  create_table "occassions", force: :cascade do |t|
+    t.string "occassion_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "product_sizes", force: :cascade do |t|
+    t.string "size_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "product_types", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -63,6 +75,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_10_053217) do
     t.string "product_description"
     t.float "price"
     t.integer "quantity"
+    t.integer "product_type_id"
+    t.integer "product_size_id"
+    t.integer "occassion_id"
+    t.integer "color_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

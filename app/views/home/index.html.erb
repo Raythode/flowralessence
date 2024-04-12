@@ -1,42 +1,62 @@
 <%= javascript_include_tag('home.js') %>
 
 <div class="container-fluid py-4">
+    <%= form_tag root_path, :method => "get" do %>
+        <div class="d-flex flex-row align-items-center mb-4 p-2" style="border: 1px solid #000; border-radius: 5px; background-color: #e9ecef">
+            <p class="mb-0">Filters: </p>
+
+            <%= hidden_field_tag :search, params[:search] %>
+
+            <%= select_tag :occassion_id, options_for_select(options_from_collection_for_select(Occassion.all.order('occassion_name ASC'), :id, :occassion_name, params[:occassion_id]), params[:occassion_id].to_i) , class: "form-select mx-2", :onchange => "this.form.submit()", :include_blank => "Select Occassion"  %>
+
+            <%= select_tag :product_type_id, options_for_select(options_from_collection_for_select(ProductType.all.order('name ASC'), :id, :name, params[:product_type_id]), params[:product_type_id].to_i) , class: "form-select mx-2", :onchange => "this.form.submit()", :include_blank => "Select Type"  %>
+
+            <%= select_tag :color_id, options_for_select(options_from_collection_for_select(Color.all.order('color ASC'), :id, :color, params[:color_id]), params[:color_id].to_i) , class: "form-select mx-2", :onchange => "this.form.submit()", :include_blank => "Select Color"  %>
+
+            <%= select_tag :product_size_id, options_for_select(options_from_collection_for_select(ProductSize.all.order('size_name ASC'), :id, :size_name, params[:product_size_id]), params[:product_size_id].to_i) , class: "form-select mx-2", :onchange => "this.form.submit()", :include_blank => "Select Size"  %>
+
+            <button class="btn btn-danger" onclick="location.href = '/'" >X</button>
+        </div>
+    <% end %>
+
     <div class="row">
-        <% @items.each do |item| %>
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img src="..." class="card-img-top" alt="..." style="height: 200px; width: auto; background-color: lightblue;">
-                    <div class="card-body">
-                        <div class="d-flex flex-column align-items-center">
-                            <h5 class="card-title"><%= item[:product_name] %></h5>
-                            <h6 class="card-description"><%= item[:product_description] %></h6>
-                        </div>
-                        <div class="d-flex flex-row justify-content-between">
-                            <p class="card-text">Price: <strong>$ <%= number_with_precision item[:price], :precision => 2 %></strong></p>
-                            <p class="card-text">Available: <strong id="items-available-<%= item[:id] %>"><%= item[:quantity] %></strong></p>
-                        </div>
-
-                        <% if item[:quantity] > 0 %>
-                            <div class="d-flex flex-row justify-content-between">
-                                <div class="d-flex flex-row p-2 align-items-center justify-content-between" style="border: 2px solid #000; border-radius: 8px; height: 50px; width: 100px;">
-                                    <h4 style="cursor: pointer;" onclick="removeQuantity(<%= item[:id] %>)">-</h4>
-
-                                    <h4 id="quantity-<%= item[:id] %>">0</h4>
-
-                                <h4 style="cursor: pointer;" onclick="addQuantity(<%= item[:id] %>)">+</h4>
-                                </div>
-
-                                <div class="d-flex">
-                                    <button class="btn btn-warning" id="add-to-cart-<%= item[:id] %>" disabled="isCartDisabled(<%= item[:id] %>)" onclick="addToCart(<%= item[:id] %>)">Add to Cart</button>
-                                </div>
+        <% if @items.any? %>
+            <% @items.each do |item| %>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="..." class="card-img-top" alt="..." style="height: 200px; width: auto; background-color: lightblue;">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center">
+                                <h5 class="card-title"><%= item[:product_name] %></h5>
+                                <h6 class="card-description"><%= item[:product_description] %></h6>
                             </div>
-                        <% else %>
-                            <div class="d-flex flex-row justify-content-center" style="padding: 6.5px 0px">
-                                <h4 class="text-danger">Out Of Stock</h4>
-                            </div>
-                        <% end %>
+
+                            <% if item[:quantity] > 0 %>
+                                <div class="d-flex flex-row justify-content-between">
+                                    <div class="d-flex flex-row p-2 align-items-center justify-content-between" style="border: 2px solid #000; border-radius: 8px; height: 50px; width: 100px;">
+                                        <h4 style="cursor: pointer;" onclick="removeQuantity(<%= item[:id] %>)">-</h4>
+
+                                        <h4 id="quantity-<%= item[:id] %>">0</h4>
+
+                                    <h4 style="cursor: pointer;" onclick="addQuantity(<%= item[:id] %>)">+</h4>
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <button class="btn btn-warning" id="add-to-cart-<%= item[:id] %>" disabled="isCartDisabled(<%= item[:id] %>)" onclick="addToCart(<%= item[:id] %>)">Add to Cart</button>
+                                    </div>
+                                </div>
+                            <% else %>
+                                <div class="d-flex flex-row justify-content-center" style="padding: 6.5px 0px">
+                                    <h4 class="text-danger">Out Of Stock</h4>
+                                </div>
+                            <% end %>
+                        </div>
                     </div>
                 </div>
+            <% end %>
+        <% else %>
+            <div class="d-flex flex-row justify-content-center" style="padding: 6.5px 0px">
+                <h4 class="text-danger">No Items Found</h4>
             </div>
         <% end %>
     </div>
