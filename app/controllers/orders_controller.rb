@@ -4,6 +4,11 @@ class OrdersController < ApplicationController
   end
 
   def checkout
+    @cart_items_f = Cart.where(customer_id: Current.user.id)
+
+    @occassion_ids = @cart_items_f.map { |cart| cart.product.occassion_id }
+
+    @suggestions = Product.where(occassion_id: @occassion_ids)
   end
 
   def show

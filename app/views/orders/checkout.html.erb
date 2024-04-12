@@ -99,7 +99,7 @@
             </div>
     </div>
     <div class="col-md-6">
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-header">
                 <h4>Summary</h4>
             </div>
@@ -160,6 +160,50 @@
 
                     <%= form.submit "Place Order", class: "btn btn-primary" %>
                 </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Suggestions</h4>
+            </div>
+            <div class="card-body row">
+                <% @suggestions.each do |item| %>
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="..." style="height: 200px; width: auto; background-color: lightblue;">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center">
+                                    <h5 class="card-title"><%= item[:product_name] %></h5>
+                                    <h6 class="card-description"><%= item[:product_description] %></h6>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between">
+                                    <p class="card-text">Price: <strong>$ <%= number_with_precision item[:price], :precision => 2 %></strong></p>
+                                    <p class="card-text">Available: <strong id="items-available-<%= item[:id] %>"><%= item[:quantity] %></strong></p>
+                                </div>
+                                <% if item[:quantity] > 0 %>
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <div class="d-flex flex-row p-2 align-items-center justify-content-between" style="border: 2px solid #000; border-radius: 8px; height: 50px; width: 100px;">
+                                            <h4 style="cursor: pointer;" onclick="removeQuantity(<%= item[:id] %>)">-</h4>
+
+                                            <h4 id="quantity-<%= item[:id] %>">0</h4>
+
+                                        <h4 style="cursor: pointer;" onclick="addQuantity(<%= item[:id] %>)">+</h4>
+                                        </div>
+
+                                        <div class="d-flex">
+                                            <button class="btn btn-warning" id="add-to-cart-<%= item[:id] %>" disabled="isCartDisabled(<%= item[:id] %>)" onclick="addToCart(<%= item[:id] %>)">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                <% else %>
+                                    <div class="d-flex flex-row justify-content-center" style="padding: 6.5px 0px">
+                                        <h4 class="text-danger">Out Of Stock</h4>
+                                    </div>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
             </div>
         </div>
     </div>
