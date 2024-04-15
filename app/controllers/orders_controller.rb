@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
 
     @occassion_ids = @cart_items_f.map { |cart| cart.product.occassion_id }
 
-    @suggestions = Product.where(occassion_id: @occassion_ids)
+    @suggestions = Product.where(is_gift: true).where(occassion_id: @occassion_ids)
   end
 
   def show

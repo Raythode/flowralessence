@@ -171,7 +171,7 @@
                 <% @suggestions.each do |item| %>
                     <div class="col-md-6 mb-4">
                         <div class="card">
-                            <img src="..." class="card-img-top" alt="..." style="height: 200px; width: auto; background-color: lightblue;">
+                            <%= image_tag item.product_image, class: "card-img-top", alt: "Item image", style: "height: 200px; width: auto; background-color: lightblue;" if item.product_image.attached? %>
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center">
                                     <h5 class="card-title"><%= item[:product_name] %></h5>
