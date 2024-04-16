@@ -1,0 +1,37 @@
+<div class="container-fluid py-4" style="min-height: calc(100vh - 56px);">
+    <div class="row">
+        <div class="col-3 bg-light" style="min-height: calc(100vh - 56px - 48px);">
+            <ul class="navbar-nav w-100 ">
+            <% @flowers.each do |flower|  %>
+                <li class="nav-item"><%= link_to "#{flower.name}", about_flowers_path(id: flower.id), method: :get, class: "nav-link w-100 text-start" %></li>
+            <% end %>
+            </ul>
+        </div>
+
+        <div class="col-9">
+            <% if params[:id].present? %>
+                <h2 class="text-center"><%= @selected_flower.name %></h2>
+
+                <div class="d-flex flex-row justify-content-center my-2">
+                    <p class="mx-2"><%= @selected_flower.about_flower.flower_description_1 %></p>
+                    <%= image_tag @selected_flower_products.first.product_image, alt: "Flower image", height: 300, width: 400 if @selected_flower_products.first.product_image.attached? %>
+                </div>
+
+                <div class="mt-4">
+                <%= sanitize @selected_flower.about_flower.flower_description_2 %>
+                </div>
+            <% else  %>
+                <h4 class="text-center mb-5">Get to Know more about the flowers of interest</h4>
+
+                <p class="text-center">
+                    Here you can find information about the flowers that we have available for sale. Tap on the flower of interest to get more information about it shown on the left panel.
+                </p>
+
+                <p class="text-center">
+                    You can even ask questions about the flowers that you are interested in. We will be happy to help you with any questions that you may have. Just comment your question inside one of the flower's pages.
+                </p>
+            <% end %>
+        </div>
+    </div>
+
+</div>

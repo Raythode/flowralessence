@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :products
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -25,4 +24,6 @@ Rails.application.routes.draw do
 
   get "/orders" => "orders#index", as: :orders
   get "/orders/:order_number" => "orders#show", as: :order
+
+  get "/about-flowers" => "about#about_flowers", as: :about_flowers
 end
