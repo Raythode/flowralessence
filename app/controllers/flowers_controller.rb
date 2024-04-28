@@ -5,14 +5,28 @@ class FlowersController < ApplicationController
         if @product.save
             redirect_to root_path, notice: "Flower added successfully!"
         else
-            render :new, status: 400
+            redirect_to root_path, alert: "Flower add failed!"
         end
     end
 
     def update
+        @product = Product.find(params[:id])
+
+        if @product.update(product_params)
+            redirect_to root_path, notice: "Flower updated successfully!"
+        else
+            redirect_to root_path, alert: "Flower update failed!"
+        end
     end
 
     def destroy
+        @product = Product.find(params[:id])
+
+        if @product.destroy
+            redirect_to root_path, notice: "Flower deleted successfully!"
+        else
+            redirect_to root_path, alert: "Flower delete failed!"
+        end
     end
 
     def product_params
