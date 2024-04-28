@@ -8,10 +8,25 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.find_or_create_by!(full_name: "Test User", email: "test@gmail.com", "password_digest": BCrypt::Password.create("test"), role_id: 1)
-
 ['Customer', 'Admin'].each do |role|
     UserRole.find_or_create_by!(role: role)
+end
+
+[
+    {
+        full_name: "Test User",
+        email: "test@gmail.com",
+        "password_digest": BCrypt::Password.create("test"), 
+        role_id: 1
+    },
+    {
+        full_name: "Admin User",
+        email: "admin@gmail.com",
+        "password_digest": BCrypt::Password.create("admin"),
+        role_id: 2
+    }
+].each do |user|
+    User.find_or_create_by!(user)
 end
 
 [
