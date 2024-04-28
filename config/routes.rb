@@ -26,4 +26,8 @@ Rails.application.routes.draw do
   get "/orders/:order_number" => "orders#show", as: :order
 
   get "/about-flowers" => "about#about_flowers", as: :about_flowers
+
+  post "/add-new-flower" => "flowers#create", as: :add_new_flower
+  post "/edit-flower" => "flowers#update", as: :edit_flower
+  delete "/delete-flower" => "flowers#destroy", as: :delete_flower
 end
