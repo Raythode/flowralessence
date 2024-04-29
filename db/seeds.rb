@@ -256,3 +256,119 @@ end
 ].each do |flower|
     ProductType.find_or_create_by!(name: flower[:name], about_flower_id: flower[:about_flower_id])
 end
+
+[
+    {
+        name_on_card: "John Doe",
+        card_number: "1234567890123456",
+        expiration_date: "12/2022",
+        cvv: "123",
+        billing_address: 1,
+    }
+].each do |payment|
+    Payment.find_or_create_by!(name_on_card: payment[:name_on_card], card_number: payment[:card_number], expiration_date: payment[:expiration_date], cvv: payment[:cvv], billing_address: payment[:billing_address])
+end
+
+[
+    {
+        address_line_1: "123 Main St",
+        address_line_2: "Apt 1",
+        city: "New York",
+        state: "NY",
+        zip_code: "10001",
+    }
+].each do |address|
+    Address.find_or_create_by!(address_line_1: address[:address_line_1], address_line_2: address[:address_line_2], city: address[:city], state: address[:state], zip_code: address[:zip_code])
+end
+
+[
+    {
+        customer_id: 1,
+        order_number: "123456",
+        product_id: 1,
+        product_sale_price: 20.00,
+        product_quantity: 1,
+        order_tax: 1.00,
+        order_total: 21.00,
+        address_id: 1,
+        payment_info_id: 1,
+        status_id: 1,
+        created_at: "2024-05-27 00:00:00",
+    },
+    {
+        customer_id: 1,
+        order_number: "57356345",
+        product_id: 4,
+        product_sale_price: 80.00,
+        product_quantity: 2,
+        order_tax: 1.00,
+        order_total: 162.00,
+        address_id: 1,
+        payment_info_id: 1,
+        status_id: 2,
+        created_at: "2024-05-28 00:00:00",
+    },
+    {
+        customer_id: 3,
+        order_number: "25235234",
+        product_id: 5,
+        product_sale_price: 100.00,
+        product_quantity: 1,
+        order_tax: 1.00,
+        order_total: 101.00,
+        address_id: 1,
+        payment_info_id: 1,
+        status_id: 3,
+    },
+    {
+        customer_id: 3,
+        order_number: "123484674563456",
+        product_id: 6,
+        product_sale_price: 20.00,
+        product_quantity: 1,
+        order_tax: 1.00,
+        order_total: 21.00,
+        address_id: 1,
+        payment_info_id: 1,
+        status_id: 1,
+    },
+    {
+        customer_id: 5,
+        order_number: "127647563456",
+        product_id: 1,
+        product_sale_price: 20.00,
+        product_quantity: 1,
+        order_tax: 1.00,
+        order_total: 21.00,
+        address_id: 1,
+        payment_info_id: 1,
+        status_id: 1,
+    },
+    {
+        customer_id: 6,
+        order_number: "1236354456",
+        product_id: 1,
+        product_sale_price: 20.00,
+        product_quantity: 1,
+        order_tax: 1.00,
+        order_total: 21.00,
+        address_id: 1,
+        payment_info_id: 1,
+        status_id: 1,
+    },
+    {
+        customer_id: 6,
+        order_number: "12363544568",
+        product_id: 1,
+        product_sale_price: 20.00,
+        product_quantity: 1,
+        order_tax: 1.00,
+        order_total: 21.00,
+        address_id: 1,
+        payment_info_id: 1,
+        status_id: 4,
+    }
+].each do |order|
+    Order.find_or_create_by!(customer_id: order[:customer_id], order_number: order[:order_number], product_id: order[:product_id], product_sale_price: order[:product_sale_price], product_quantity: order[:product_quantity], order_tax: order[:order_tax], order_total: order[:order_total], address_id: order[:address_id], payment_info_id: order[:payment_info_id], status_id: order[:status_id])
+end
+
