@@ -259,18 +259,6 @@ end
 
 [
     {
-        name_on_card: "John Doe",
-        card_number: "1234567890123456",
-        expiration_date: "12/2022",
-        cvv: "123",
-        billing_address: 1,
-    }
-].each do |payment|
-    Payment.find_or_create_by!(name_on_card: payment[:name_on_card], card_number: payment[:card_number], expiration_date: payment[:expiration_date], cvv: payment[:cvv], billing_address: payment[:billing_address])
-end
-
-[
-    {
         address_line_1: "123 Main St",
         address_line_2: "Apt 1",
         city: "New York",
@@ -279,6 +267,18 @@ end
     }
 ].each do |address|
     Address.find_or_create_by!(address_line_1: address[:address_line_1], address_line_2: address[:address_line_2], city: address[:city], state: address[:state], zip_code: address[:zip_code])
+end
+
+[
+    {
+        name_on_card: "John Doe",
+        card_number: "1234567890123456",
+        expiration_date: "12/2022",
+        cvv: "123",
+        billing_address: 1,
+    }
+].each do |payment|
+    Payment.find_or_create_by!(name_on_card: payment[:name_on_card], card_number: payment[:card_number], expiration_date: payment[:expiration_date], cvv: payment[:cvv], billing_address: payment[:billing_address])
 end
 
 [
