@@ -31,4 +31,6 @@ Rails.application.routes.draw do
   post "/add-new-flower" => "flowers#create", as: :add_new_flower
   post "/edit-flower" => "flowers#update", as: :edit_flower
   delete "/delete-flower" => "flowers#destroy", as: :delete_flower
+
+  get "/dashboard" => "dashboard#index", as: :dashboard
 end

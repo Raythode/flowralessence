@@ -26,9 +26,10 @@
                                 <li class="px-2"><%= button_to "Orders", orders_path, method: :get, class: "nav-link" %></li>
                             <% else %>
                                 <li class="px-2"><%= button_to "Manage Orders", orders_path, method: :get, class: "nav-link" %></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="px-2"><%= button_to "Analytics Dashboard", dashboard_path, method: :get, class: "nav-link" %></li>
                             <% end %>
 
-                            
                             <li><hr class="dropdown-divider"></li>
                             <li class="px-2"><%= button_to "Logout", sign_out_path, method: :delete, class: "nav-link" %></li>
                         </ul>

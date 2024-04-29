@@ -1,0 +1,87 @@
+<div class="container-fluid py-4" style="min-height: calc(100vh - 56px);">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Total No. of Customers</h5>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-text"><%= User.where(role_id: 1).count %></h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Total No. of Admins</h5>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-text"><%= User.where(role_id: 2).count %></h1>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="row my-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Orders Placed</h5>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-text"><%= Order.all.group_by(&:order_number).count %></h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Orders Pending</h5>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-text"><%= Order.where(status_id: 1).group_by(&:order_number).count %></h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Orders in Processing</h5>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-text"><%= Order.where(status_id: 2).group_by(&:order_number).count %></h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Orders Shipped</h5>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-text"><%= Order.where(status_id: 3).group_by(&:order_number).count %></h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Orders Delivered</h5>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-text"><%= Order.where(status_id: 4).group_by(&:order_number).count %></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <%= column_chart Order.group_by_day(:created_at).count, xtitle: "Date", ytitle: "Orders Placed" %>
+    </div>
+</div>

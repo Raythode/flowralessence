@@ -24,7 +24,31 @@ end
         email: "admin@gmail.com",
         "password_digest": BCrypt::Password.create("admin"),
         role_id: 2
-    }
+    },
+    {
+        full_name: "Test User 1",
+        email: "test1@gmail.com",
+        "password_digest": BCrypt::Password.create("test"), 
+        role_id: 1
+    },
+    {
+        full_name: "Admin User 1",
+        email: "admin1@gmail.com",
+        "password_digest": BCrypt::Password.create("admin"),
+        role_id: 2
+    },
+    {
+        full_name: "Test User 2",
+        email: "test2@gmail.com",
+        "password_digest": BCrypt::Password.create("test"), 
+        role_id: 1
+    },
+    {
+        full_name: "Test User 3",
+        email: "test3@gmail.com",
+        "password_digest": BCrypt::Password.create("test"), 
+        role_id: 1
+    },
 ].each do |user|
     User.find_or_create_by!(user)
 end
