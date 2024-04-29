@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   get "/orders" => "orders#index", as: :orders
   get "/orders/:order_number" => "orders#show", as: :order
+  post "/orders/:order_number/update-status/:status_id" => "orders#update", as: :update_order
 
   get "/about-flowers" => "about#about_flowers", as: :about_flowers
 

@@ -1,6 +1,10 @@
 class OrdersController < ApplicationController
   def index
-    @orders = Order.where(customer_id: Current.user.id).group_by(&:order_number)
+    if Current.user.user_role.role === "Admin"
+      @orders = Order.all.group_by(&:order_number)
+    else
+      @orders = Order.where(customer_id: Current.user.id).group_by(&:order_number)
+    end
   end
 
   def checkout
@@ -12,7 +16,12 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.where(customer_id: Current.user.id, order_number: params[:order_number])
+    if Current.user.user_role.role === "Admin"
+      @order = Order.where(order_number: params[:order_number])
+    else
+      @order = Order.where(customer_id: Current.user.id, order_number: params[:order_number])
+    end
+    
 
     @order_total = @order.first.order_total
     @order_tax = @order.first.order_tax
@@ -91,4 +100,14 @@ class OrdersController < ApplicationController
       redirect_to checkout_path
     end
   end
+
+  def update
+    @orders = Order.where(order_number: params[:order_number])
+
+    @orders.each do |order|
+      order.status_id = params[:status_id]
+      order.save
+    end
+  end
+
 end
