@@ -6,11 +6,11 @@ class AboutController < ApplicationController
 
       if @selected_flower.present?
         @selected_flower_products = Product.where(product_type_id: @selected_flower.id)
+
+        @chat_groups = ChatGroup.where(about_product_id: @selected_flower.about_flower_id)
+
+        @questions = Chat.where(chat_group_id: @chat_groups.pluck(:id), reply_to: nil).order('created_at ASC')
       end
-
-      @chat_groups = ChatGroup.where(about_product_id: @selected_flower.about_flower_id)
-
-      @questions = Chat.where(chat_group_id: @chat_groups.pluck(:id)).order('created_at ASC')
     end
 
     def edit
@@ -43,6 +43,25 @@ class AboutController < ApplicationController
         end
       else
         redirect_to about_flowers_path(id: params[:flower_id]), alert: "There was an error submitting your question."
+      end
+    end
+
+    def answer_question
+      @existing_chat = Chat.find_by(reply_to: params[:reply_to])
+
+      if @existing_chat.present?
+        @existing_chat.update(message: params[:message])
+        redirect_to about_flowers_path(id: params[:flower_id]), notice: "Your answer has been updated."
+        return
+      end
+
+
+      @chat = Chat.new(chat_group_id: params[:chat_group_id], user_id: Current.user.id, message: params[:message], reply_to: params[:reply_to])
+
+      if @chat.save
+        redirect_to about_flowers_path(id: params[:flower_id]), notice: "Your answer has been submitted."
+      else
+        redirect_to about_flowers_path(id: params[:flower_id]), alert: "There was an error submitting your answer."
       end
     end
   end

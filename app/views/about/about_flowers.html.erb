@@ -32,27 +32,57 @@
                 <% if @questions.present? %>
                     <h4 class="text-center my-4">Questions</h4>
                     <% @questions.each.with_index do |question, index| %>
-                        <div class="d-flex flex-row">
-                            <p><strong>Question <%= index + 1 %>.</strong></p>
-                            <div style="width: 10px;"></div>
-                            <p><%= question.message %></p>
-                        </div>
+                        <div class="my-4">
+                            <div class="d-flex flex-row">
+                                <span><strong>Question <%= index + 1 %>.</strong></span>
+                                <div style="width: 10px;"></div>
+                                <span><%= question.message %></span>
+                            </div>
 
-                        <div class="d-flex flex-row">
-                            <p><strong>Answer: </strong></p>
-                            <div style="width: 10px;"></div>
-                            <p><%= Chat.where(id: question.reply_to).first ? Chat.where(id: question.reply_to).first.message : "Answer Not Available" %></p>
+                            <% if params[:reply_to].present? && params[:reply_to].to_i === question.id %>
+                                <%= form_with url: answer_question_path, method: :post do |form| %>
+                                    <div class="d-flex flex-row align-items-center my-2">
+                                            <span><strong>Answer: </strong></span>
+                                            <div style="width: 10px;"></div>
+                                            <%= form.hidden_field :chat_group_id, value: question.chat_group_id %>
+                                            <%= form.hidden_field :reply_to, value: question.id %>
+                                            <%= form.hidden_field :flower_id, value: params[:id] %>
+                                            <%= form.text_field :message, value: Chat.where(reply_to: question.id).first.present? ? Chat.where(reply_to: question.id).first.message : "", class: "form-control" %>
+
+                                        <% if Current.user.user_role.role === "Admin" %>
+                                            <div style="width: 10px;"></div>
+                                            <%= form.submit "Save Changes", class: "btn btn-success", style: "min-width: 150px;" %>
+                                            <div style="width: 10px;"></div>
+                                            <%= link_to "Cancel", "/about-flowers?id=#{params[:id]}", class: "btn btn-secondary" %>
+                                        <% end %>
+                                    </div>
+                                <% end %>
+                            <% else %>
+                                <div class="d-flex flex-row align-items-center my-2">
+                                        <span><strong>Answer: </strong></span>
+                                        <div style="width: 10px;"></div>
+                                        <span><%= Chat.where(reply_to: question.id).first ? Chat.where(reply_to: question.id).first.message : "Answer Not Available" %></span>
+
+                                    <% if Current.user.user_role.role === "Admin" %>
+                                        <div style="width: 10px;"></div>
+                                        <%= link_to "Edit Answer", "/about-flowers?id=#{params[:id]}&reply_to=#{question.id}", class: "btn btn-warning" %>
+                                    <% end %>
+                                </div>
+                            <% end %>
                         </div>
                     <% end %>
                 <% end %>
-                <%= form_with url: ask_question_path, method: :post, local: true do |f| %>
-                    <div class="form-group d-flex flex-row w-100 my-3">
-                        <%= f.text_field :message, class: "form-control", placeholder: "Ask a question about this flower" %>
 
-                        <div style="width: 20px;"></div>
-                        <%= f.hidden_field :flower_id, value: @selected_flower.id %>
-                        <%= f.submit "Ask", class: "btn btn-primary", style: "min-width: 100px;" %>
-                    </div>
+                <% if Current.user.user_role.role === "Customer" %>
+                    <%= form_with url: ask_question_path, method: :post, local: true do |f| %>
+                        <div class="form-group d-flex flex-row w-100 my-3">
+                            <%= f.text_field :message, class: "form-control", placeholder: "Ask a question about this flower" %>
+
+                            <div style="width: 20px;"></div>
+                            <%= f.hidden_field :flower_id, value: @selected_flower.id %>
+                            <%= f.submit "Ask", class: "btn btn-primary", style: "min-width: 100px;" %>
+                        </div>
+                    <% end %>
                 <% end %>
             <% else  %>
                 <h4 class="text-center mb-5">Get to Know more about the flowers of interest</h4>
