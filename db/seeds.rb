@@ -264,9 +264,10 @@ end
         city: "New York",
         state: "NY",
         zip_code: "10001",
+        package_size: "Small"
     }
 ].each do |address|
-    Address.find_or_create_by!(address_line_1: address[:address_line_1], address_line_2: address[:address_line_2], city: address[:city], state: address[:state], zip_code: address[:zip_code])
+    Address.find_or_create_by!(address_line_1: address[:address_line_1], address_line_2: address[:address_line_2], city: address[:city], state: address[:state], zip_code: address[:zip_code], package_size: address[:package_size])
 end
 
 [

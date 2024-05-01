@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_01_001223) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_01_034945) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "about_flowers", force: :cascade do |t|
-    t.string "flower_description_1"
-    t.string "flower_description_2"
+    t.text "flower_description_1"
+    t.text "flower_description_2"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_001223) do
     t.string "zip_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "package_size"
   end
 
   create_table "carts", force: :cascade do |t|
@@ -162,9 +163,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_001223) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  change_column "about_flowers", "flower_description_1", "text"
-  change_column "about_flowers", "flower_description_2", "text"
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
