@@ -26,7 +26,34 @@
 
                 <div class="trix-content my-2">
                     <%= @selected_flower.about_flower.flower_description_2 %>
-                </div> 
+                </div>
+
+
+                <% if @questions.present? %>
+                    <h4 class="text-center my-4">Questions</h4>
+                    <% @questions.each.with_index do |question, index| %>
+                        <div class="d-flex flex-row">
+                            <p><strong>Question <%= index + 1 %>.</strong></p>
+                            <div style="width: 10px;"></div>
+                            <p><%= question.message %></p>
+                        </div>
+
+                        <div class="d-flex flex-row">
+                            <p><strong>Answer: </strong></p>
+                            <div style="width: 10px;"></div>
+                            <p><%= Chat.where(id: question.reply_to).first ? Chat.where(id: question.reply_to).first.message : "Answer Not Available" %></p>
+                        </div>
+                    <% end %>
+                <% end %>
+                <%= form_with url: ask_question_path, method: :post, local: true do |f| %>
+                    <div class="form-group d-flex flex-row w-100 my-3">
+                        <%= f.text_field :message, class: "form-control", placeholder: "Ask a question about this flower" %>
+
+                        <div style="width: 20px;"></div>
+                        <%= f.hidden_field :flower_id, value: @selected_flower.id %>
+                        <%= f.submit "Ask", class: "btn btn-primary", style: "min-width: 100px;" %>
+                    </div>
+                <% end %>
             <% else  %>
                 <h4 class="text-center mb-5">Get to Know more about the flowers of interest</h4>
 

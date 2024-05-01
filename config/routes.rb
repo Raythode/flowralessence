@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   get "/about-flowers" => "about#about_flowers", as: :about_flowers
   get "/about-flowers/:id/edit" => "about#edit", as: :edit_about_flower
   post "/about-flowers/:id/edit" => "about#update", as: :update_about_flower
+  post "/about-flowers/ask-question" => "about#ask_question", as: :ask_question
 
   post "/add-new-flower" => "flowers#create", as: :add_new_flower
   post "/edit-flower" => "flowers#update", as: :edit_flower
