@@ -1,0 +1,46 @@
+<%= javascript_include_tag('about_flower.js') %>
+
+<div class="container-fluid py-4" style="min-height: calc(100vh - 56px);">
+    <div class="row">
+        <div class="col bg-light" style="min-height: calc(100vh - 56px - 48px);">
+            <%= form_with model: @about_flower, url: "/about-flowers/#{@flower.id}/edit", method: "post" do |form| %>
+                <div class="d-flex flex-row mt-4">
+                    <%= link_to "Cancel", :back, class: "btn btn-secondary w-100" %>
+
+                    <div style="width: 20px;"></div>
+
+                    <button class="btn btn-warning w-100" onclick="onPreviewClick()" type="button">Preview Changes</button>
+
+                    <div style="width: 20px;"></div>
+
+                    <%= form.submit "Save Changes", class: "btn btn-success w-100" %>
+                </div>
+
+                <div class="form-group my-3">
+                    <%= form.label :flower_description_1 %>
+                    <%= form.rich_text_area :flower_description_1, style: "min-height: 200px;", value: @flower.about_flower.flower_description_1, id: "flower_description_1" %>
+                </div>
+
+                <div class="form-group mb-3">
+                    <%= form.label :flower_description_2 %>
+                    <%= form.rich_text_area :flower_description_2, style: "min-height: 200px;", value: @flower.about_flower.flower_description_2, id: "flower_description_2" %>
+                </div>
+            <% end %>
+        </div>
+
+        <div class="col">
+                <div class="d-flex flex-row justify-content-between">
+                    <h2 class="text-center"><%= @flower.name %></h2>
+                </div>
+
+                <div id="flower-description-1-content" class="trix-content my-2">
+                    <%= @flower.about_flower.flower_description_1 %>
+                </div>
+
+                <div id="flower-description-2-content" class="trix-content my-2">
+                    <%= @flower.about_flower.flower_description_2 %>
+                </div> 
+        </div>
+    </div>
+
+</div>

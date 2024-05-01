@@ -2,24 +2,31 @@
     <div class="row">
         <div class="col-3 bg-light" style="min-height: calc(100vh - 56px - 48px);">
             <ul class="navbar-nav w-100 ">
-            <% @flowers.each do |flower|  %>
-                <li class="nav-item"><%= link_to "#{flower.name}", about_flowers_path(id: flower.id), method: :get, class: "nav-link w-100 text-start" %></li>
-            <% end %>
+                <% @flowers.each do |flower|  %>
+                    <li class="nav-item"><%= link_to "#{flower.name}", about_flowers_path(id: flower.id), method: :get, class: "nav-link w-100 text-start" %></li>
+                <% end %>
             </ul>
         </div>
 
         <div class="col-9">
             <% if params[:id].present? %>
-                <h2 class="text-center"><%= @selected_flower.name %></h2>
+                <div class="d-flex flex-row justify-content-between">
+                    <h2 class="text-center"><%= @selected_flower.name %></h2>
 
-                <div class="d-flex flex-row justify-content-center my-2">
-                    <p class="mx-2"><%= @selected_flower.about_flower.flower_description_1 %></p>
-                    <%= image_tag @selected_flower_products.first.product_image, alt: "Flower image", height: 300, width: 400 if @selected_flower_products.first.product_image.attached? %>
+                    <% if Current.user.user_role.role === "Admin" %>
+                        <div class="d-flex flex-row">
+                            <%= link_to "Edit", edit_about_flower_path(@selected_flower), class: "btn btn-warning my-2" %>
+                        </div>
+                    <% end %>
                 </div>
 
-                <div class="mt-4">
-                <%= sanitize @selected_flower.about_flower.flower_description_2 %>
+                <div class="trix-content my-2">
+                    <%= @selected_flower.about_flower.flower_description_1 %>
                 </div>
+
+                <div class="trix-content my-2">
+                    <%= @selected_flower.about_flower.flower_description_2 %>
+                </div> 
             <% else  %>
                 <h4 class="text-center mb-5">Get to Know more about the flowers of interest</h4>
 

@@ -20,14 +20,16 @@
     <% end %>
 
     <div class="row">
-        <div class="col-md-3 mb-4">
-            <div class="card" style="height: 100%; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#addModal">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <h1 style="font-size: 150px;">+</h1>
-                    <h5 class="card-title">Add New Flower</h5>
+        <% if Current.user.user_role.role === "Admin" %>
+            <div class="col-md-3 mb-4">
+                <div class="card" style="height: 100%; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#addModal">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <h1 style="font-size: 150px;">+</h1>
+                        <h5 class="card-title">Add New Flower</h5>
+                    </div>
                 </div>
             </div>
-        </div>
+        <% end %>
         <% if @items.any? %>
             <% @items.each do |item| %>
                 <div class="col-md-3 mb-4">
